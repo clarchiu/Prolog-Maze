@@ -1,4 +1,4 @@
-:- [maze-KB].
+:- [maze].
 
 :- dynamic currentPos/2.
 :- retractall(currentPos(_,_)).
@@ -15,5 +15,29 @@ move(right) :-
   maze(R, C1, open),
   C1 is C + 1,
   C1 < 11,
-  retract(currentState(R,C)),
-  assert(currentState(R,C1)).
+  retract(currentPos(R,C)),
+  assert(currentPos(R,C1)).
+
+move(left) :-
+  currentPos(R, C),
+  maze(R, C1, open),
+  C1 is C - 1,
+  C1 > 0,
+  retract(currentPos(R,C)),
+  assert(currentPos(R,C1)).
+
+move(down) :-
+  currentPos(R, C),
+  maze(R1, C, open),
+  R1 is R + 1,
+  R1 < 11,
+  retract(currentPos(R,C)),
+  assert(currentPos(R1,C)).
+
+move(up) :-
+  currentPos(R, C),
+  maze(R1, C, open),
+  R1 is R - 1,
+  R1 > 0,
+  retract(currentPos(R,C)),
+  assert(currentPos(R1,C)).
