@@ -12,6 +12,7 @@ play :-
   retractall(currentPos(_,_)),
   assert(currentPos(1,1)),
   print_maze,
+  writeln('Press arrow keys to move'),
   read_keyatom(Key),
   (Key == up -> move(up) ;
     Key == right -> move(right) ;

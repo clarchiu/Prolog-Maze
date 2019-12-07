@@ -5,6 +5,9 @@
 getChar(open, '  ').
 getChar(closed, 'XX').
 
+% clear terminal predicate
+cls :- write('\33\[2J').
+
 % first and last lines of the maze    
 print_line(Width) :-
     write('XX'),
@@ -13,6 +16,7 @@ print_line(Width) :-
 
 % main print predicate    
 print_maze :-
+    cls,
     currentPos(X,Y),
     mazeSize(Height, Width),
     print_line(Width),
