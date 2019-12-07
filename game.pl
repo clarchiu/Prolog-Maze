@@ -8,7 +8,12 @@ currentPos(1, 1).
 play :-
   currentPos(_,_),
   retractall(currentPos(_,_)),
-  assert(currentPos(1,1)).
+  assert(currentPos(1,1)),
+  read_keyatom(Key),
+  (Key == up -> move(up) ;
+    Key == right -> move(right) ;
+      Key == down -> move(down) ;
+        Key == left -> move(down) ; fail).
 
 move(right) :-
   currentPos(R, C),
@@ -16,7 +21,8 @@ move(right) :-
   C1 is C + 1,
   C1 < 11,
   retract(currentPos(R,C)),
-  assert(currentPos(R,C1)).
+  assert(currentPos(R,C1)),
+  print_maze.
 
 move(left) :-
   currentPos(R, C),
