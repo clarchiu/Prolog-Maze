@@ -15,5 +15,5 @@ move(right) :-
   maze(R, C1, open),
   C1 is C + 1,
   C1 < 11,
-  retract(currentState(R,C)),
-  assert(currentState(R,C1)).
+  retract(currentPos(R,C)),
+  assert(currentPos(R,C1)).
