@@ -24,11 +24,8 @@ move(right) :-
       assert(currentPos(R,C1)),
       print_maze ;
       true),
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+  key_press(_).
+
 
 move(left) :-
   currentPos(R, C),
@@ -38,11 +35,8 @@ move(left) :-
     assert(currentPos(R,C1)),
     print_maze ;
     true),
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+  key_press(_).
+
 
 move(down) :-
   currentPos(R, C),
@@ -52,11 +46,8 @@ move(down) :-
     assert(currentPos(R1,C)),
     print_maze ;
     true),
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; write('Not a valid key')).
+  key_press(_).
+
 
 move(up) :-
   currentPos(R, C),
@@ -66,11 +57,7 @@ move(up) :-
     assert(currentPos(R1,C)),
     print_maze ;
     true),
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+  key_press(_).
 
 check_win(R,C) :-
   ((R == 10, C == 10) -> cls, win ; true).
