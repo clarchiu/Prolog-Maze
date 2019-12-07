@@ -16,7 +16,7 @@ play :-
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
       Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+        Key == left -> move(left) ; write('Not a valid key')).
 
 move(right) :-
   currentPos(R, C),
@@ -58,7 +58,7 @@ move(down) :-
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
       Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+        Key == left -> move(left) ; write('Not a valid key')).
 
 move(up) :-
   currentPos(R, C),
