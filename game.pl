@@ -13,7 +13,7 @@ play :-
 move(right) :-
   currentPos(R, C),
   maze(R, C1, open),
-  retract(currentState(R,C)),
-  assert(currentState(R,C1)),
   C1 is C + 1,
-  C1 < 11.
+  C1 < 11,
+  retract(currentState(R,C)),
+  assert(currentState(R,C1)).
