@@ -21,6 +21,7 @@ play :-
 
 move(right) :-
   currentPos(R, C),
+  check_win(R,C),
   maze(R, C1, open),
   C1 is C + 1,
   C1 < 11,
@@ -74,3 +75,8 @@ move(up) :-
     Key == right -> move(right) ;
       Key == down -> move(down) ;
         Key == left -> move(left) ; fail).
+
+check_win(R,C) :-
+  ((R == 10, C == 10) -> win ; true).
+
+win :- writeln('Victory, you escaped the maze!').
