@@ -104,3 +104,20 @@ maze(10, 7, closed).
 maze(10, 8, closed).
 maze(10, 9, open).
 maze(10, 10, open).
+
+/* if trying to do random
+:- dynamic maze/3.
+:- retractall(maze(_,_,_)).
+:- dynamic maze_size/2.
+:- retractall(maze_size(_,_)).
+
+maze_size(10,10).
+    
+create_maze(R, C) :-
+    maze_size(R, C),
+    forall(between(1, R, I),
+           (forall(between(1, C, J),
+                % randomize between open and closed
+                (random_member(X, [open, closed]))),
+            assert(maze(I, J, X)))).
+*/
