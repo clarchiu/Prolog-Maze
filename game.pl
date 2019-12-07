@@ -11,11 +11,12 @@ play :-
   currentPos(_,_),
   retractall(currentPos(_,_)),
   assert(currentPos(1,1)),
+  print_maze,
   read_keyatom(Key),
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
       Key == down -> move(down) ;
-        Key == left -> move(down) ; fail).
+        Key == left -> move(left) ; fail).
 
 move(right) :-
   currentPos(R, C),
@@ -29,7 +30,7 @@ move(right) :-
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
       Key == down -> move(down) ;
-        Key == left -> move(down) ; fail).
+        Key == left -> move(left) ; fail).
 
 move(left) :-
   currentPos(R, C),
@@ -38,7 +39,12 @@ move(left) :-
   C1 > 0,
   retract(currentPos(R,C)),
   assert(currentPos(R,C1)),
-  print_maze.
+  print_maze,
+  read_keyatom(Key),
+  (Key == up -> move(up) ;
+    Key == right -> move(right) ;
+      Key == down -> move(down) ;
+        Key == left -> move(left) ; fail).
 
 move(down) :-
   currentPos(R, C),
@@ -52,7 +58,7 @@ move(down) :-
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
       Key == down -> move(down) ;
-        Key == left -> move(down) ; fail).
+        Key == left -> move(left) ; fail).
 
 move(up) :-
   currentPos(R, C),
@@ -61,4 +67,9 @@ move(up) :-
   R1 > 0,
   retract(currentPos(R,C)),
   assert(currentPos(R1,C)),
-  print_maze.
+  print_maze,
+  read_keyatom(Key),
+  (Key == up -> move(up) ;
+    Key == right -> move(right) ;
+      Key == down -> move(down) ;
+        Key == left -> move(left) ; fail).

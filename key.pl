@@ -3,7 +3,7 @@ read_key([Code|Codes]) :-
    read_pending_codes(user,Codes,[]).
 
 read_keyatom(KAtom) :-
-    write('Press arrow key to move'),
+    writeln('Press arrow key to move'),
     read_key(Codes),
     codes_keyatom(Codes,KAtom).
 
