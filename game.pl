@@ -73,3 +73,8 @@ move(up) :-
     Key == right -> move(right) ;
       Key == down -> move(down) ;
         Key == left -> move(left) ; fail).
+
+check_win(R,C) :-
+  ((R == 10, C == 10) -> win ; true).
+
+win :- writeln('Victory, you escaped the maze!').

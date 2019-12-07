@@ -23,7 +23,8 @@ print_maze :-
     print_line(Width),
     % for each line of the maze
     forall(between(1, Height, I),
-            (write('XX'),
+            ((I == 1 -> write('  ') ;
+                        write('XX')),
                 % for each cell of the line
                 forall(between(1, Width, J),
                             % check if currentPos == cell to be printed,
@@ -35,5 +36,6 @@ print_maze :-
                             % What is the character of the type
                             getChar(Type, C),
                             write(C)))),
-                writeln('XX'))),
+                (I == Height -> writeln('  ') ;
+                writeln('XX')))),
     print_line(Width).
