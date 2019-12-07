@@ -6,9 +6,9 @@ UBC CPSC 312 project
 
 Install `swipl` then query `[game].` Query `play(Mode)` to begin the game. `Mode` can be `interactive` or `query`.
 
-##Sample maze print output
+## Sample maze print output
 
-XXXXXXXXXXXXXXXXXXXXXXXX
+`XXXXXXXXXXXXXXXXXXXXXXXX
     XXXXXXXXXX        XX
 XX          XX  XX    XX
 XX      XX  XX        XX
@@ -19,4 +19,4 @@ XX  XX      XX  XX  XXXX
 XX  XX  XXXXXX  XX    XX
 XXXX            XX    XX
 XX        XXXXXXXX    
-XXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXX`
