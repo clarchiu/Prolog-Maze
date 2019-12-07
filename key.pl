@@ -8,8 +8,7 @@ read_keyatom(KAtom) :-
         codes_keyatom(Codes, KAtom) ;
             (Codes == [113]) -> writeln('Quitting!'),
                                 fail ;
-                (Codes == [114]) -> writeln('Resetting!'),
-                                     play ; 
+                (Codes == [114]) -> play ; 
                     (writeln('Not a valid key pressed')),
                     read_keyatom(KAtom)).
 

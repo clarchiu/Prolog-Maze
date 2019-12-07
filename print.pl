@@ -17,7 +17,8 @@ print_line(Width) :-
 % main print predicate
 print_maze :-
     cls,
-    writeln('Press arrow keys to move'), nl,
+    writeln('Press arrow keys to move,'),
+    writeln('q to quit, r to reset.'), nl,
     currentPos(X,Y),
     mazeSize(Height, Width),
     print_line(Width),
@@ -28,7 +29,7 @@ print_maze :-
                 % for each cell of the line
                 forall(between(1, Width, J),
                             % check if currentPos == cell to be printed,
-                            % if it is print ** as currentPos
+                            % if it is print OO as currentPos
                             ((X == I, J == Y) ->
                             write('OO') ;
                             % What is the type of the corresponding cell

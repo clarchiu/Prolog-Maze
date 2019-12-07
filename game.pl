@@ -12,11 +12,7 @@ play :-
   retractall(currentPos(_,_)),
   assert(currentPos(1,1)),
   print_maze,
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; write('Not a valid key')).
+  key_press(_).
 
 move(right) :-
   currentPos(R, C),
@@ -27,11 +23,7 @@ move(right) :-
   retract(currentPos(R,C)),
   assert(currentPos(R,C1)),
   print_maze,
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+  key_press(_).
 
 move(left) :-
   currentPos(R, C),
@@ -41,11 +33,7 @@ move(left) :-
   retract(currentPos(R,C)),
   assert(currentPos(R,C1)),
   print_maze,
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+  key_press(_).
 
 move(down) :-
   currentPos(R, C),
@@ -55,11 +43,7 @@ move(down) :-
   retract(currentPos(R,C)),
   assert(currentPos(R1,C)),
   print_maze,
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; write('Not a valid key')).
+  key_press(_).
 
 move(up) :-
   currentPos(R, C),
@@ -69,11 +53,7 @@ move(up) :-
   retract(currentPos(R,C)),
   assert(currentPos(R1,C)),
   print_maze,
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; fail).
+  key_press(_).
 
 check_win(R,C) :-
   ((R == 10, C == 10) -> cls, win ; true).
@@ -103,3 +83,10 @@ win :-  writeln('You are a winner!'),
         writeln('You are a winner!'),
         writeln('You are a winner!'),
         writeln('You are a winner!').
+
+key_press(Key) :-
+  read_keyatom(Key),
+    (Key == up -> move(up) ;
+      Key == right -> move(right) ;
+        Key == down -> move(down) ;
+          Key == left -> move(left) ; fail).
