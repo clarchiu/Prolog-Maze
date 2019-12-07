@@ -120,6 +120,7 @@ print_line(Width) :-
 
 % main print predicate    
 print_maze :-
+    currentPos(X,Y),
     mazeSize(Height, Width),
     print_line(Width),
     % for each line of the maze    
@@ -127,11 +128,14 @@ print_maze :-
             (write('XX'),
                 % for each cell of the line
                 forall(between(1, Width, J),
+                            % check if currentPos == cell to be printed
+                            ((X == I, J == Y) ->
+                            write('**') ;
                             % What is the type of the corresponding cell
                         (   maze(I, J, Type),
                             % What is the character of the type
                             getChar(Type, C),
-                            write(C))),
+                            write(C)))),
                 writeln('XX'))),
     print_line(Width).
 
