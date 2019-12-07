@@ -21,6 +21,7 @@ play :-
 
 move(right) :-
   currentPos(R, C),
+  check_win(R,C),
   C1 is C + 1,
   C1 < 11,
   maze(R, C1, open),
@@ -76,6 +77,30 @@ move(up) :-
         Key == left -> move(left) ; fail).
 
 check_win(R,C) :-
-  ((R == 10, C == 10) -> win ; true).
+  ((R == 10, C == 10) -> cls, win ; true).
 
-win :- writeln('Victory, you escaped the maze!').
+win :-  writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!').
