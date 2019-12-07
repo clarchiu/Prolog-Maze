@@ -1,4 +1,6 @@
 :- [maze].
+:- [key].
+:- [print].
 
 :- dynamic currentPos/2.
 :- retractall(currentPos(_,_)).
@@ -22,7 +24,12 @@ move(right) :-
   C1 < 11,
   retract(currentPos(R,C)),
   assert(currentPos(R,C1)),
-  print_maze.
+  print_maze,
+  read_keyatom(Key),
+  (Key == up -> move(up) ;
+    Key == right -> move(right) ;
+      Key == down -> move(down) ;
+        Key == left -> move(down) ; fail).
 
 move(left) :-
   currentPos(R, C),
@@ -30,7 +37,8 @@ move(left) :-
   C1 is C - 1,
   C1 > 0,
   retract(currentPos(R,C)),
-  assert(currentPos(R,C1)).
+  assert(currentPos(R,C1)),
+  print_maze.
 
 move(down) :-
   currentPos(R, C),
@@ -38,7 +46,13 @@ move(down) :-
   R1 is R + 1,
   R1 < 11,
   retract(currentPos(R,C)),
-  assert(currentPos(R1,C)).
+  assert(currentPos(R1,C)),
+  print_maze,
+  read_keyatom(Key),
+  (Key == up -> move(up) ;
+    Key == right -> move(right) ;
+      Key == down -> move(down) ;
+        Key == left -> move(down) ; fail).
 
 move(up) :-
   currentPos(R, C),
@@ -46,4 +60,5 @@ move(up) :-
   R1 is R - 1,
   R1 > 0,
   retract(currentPos(R,C)),
-  assert(currentPos(R1,C)).
+  assert(currentPos(R1,C)),
+  print_maze.

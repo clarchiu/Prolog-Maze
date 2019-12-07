@@ -3,12 +3,13 @@ read_key([Code|Codes]) :-
    read_pending_codes(user,Codes,[]).
 
 read_keyatom(KAtom) :-
-   read_key(Codes),
-   codes_keyatom(Codes,KAtom).
+    write('Press arrow key to move'),
+    read_key(Codes),
+    codes_keyatom(Codes,KAtom).
 
 codes_keyatom([27,91,65],up)    :- !.
 codes_keyatom([27,91,66],down)  :- !.
 codes_keyatom([27,91,67],right) :- !.
 codes_keyatom([27,91,68],left)  :- !.
 
-% ?- read_keyatom(Key).
+% read_keyatom(Key).

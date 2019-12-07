@@ -5,7 +5,7 @@ mazeSize(10,10).
 % - and closed is printed as double Xs "XX"
 
 maze(1, 1, open).
-maze(1, 2, open).
+maze(1, 2, closed).
 maze(1, 3, closed).
 maze(1, 4, closed).
 maze(1, 5, closed).
@@ -104,56 +104,3 @@ maze(10, 7, closed).
 maze(10, 8, closed).
 maze(10, 9, open).
 maze(10, 10, open).
-
-
-/* Print predicate for maze */
-
-% char to represented open/closed
-getChar(open, '  ').
-getChar(closed, 'XX').
-
-% first and last lines of the maze    
-print_line(Width) :-
-    write('XX'),
-    forall(between(1,Width, _), write('XX')),
-    writeln('XX').
-
-% main print predicate    
-print_maze :-
-    currentPos(X,Y),
-    mazeSize(Height, Width),
-    print_line(Width),
-    % for each line of the maze    
-    forall(between(1, Height, I),
-            (write('XX'),
-                % for each cell of the line
-                forall(between(1, Width, J),
-                            % check if currentPos == cell to be printed,
-                            % if it is print ** as currentPos
-                            ((X == I, J == Y) ->
-                            write('**') ;
-                            % What is the type of the corresponding cell
-                        (   maze(I, J, Type),
-                            % What is the character of the type
-                            getChar(Type, C),
-                            write(C)))),
-                writeln('XX'))),
-    print_line(Width).
-
-/* Reading key presses */
-
-read_key([Code|Codes]) :-
-   get_single_char(Code),
-   read_pending_codes(user,Codes,[]).
-
-read_keyatom(KAtom) :-
-    write('Press arrow key to move'),
-    read_key(Codes),
-    codes_keyatom(Codes,KAtom).
-
-codes_keyatom([27,91,65],up)    :- !.
-codes_keyatom([27,91,66],down)  :- !.
-codes_keyatom([27,91,67],right) :- !.
-codes_keyatom([27,91,68],left)  :- !.
-
-% read_keyatom(Key).
