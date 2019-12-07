@@ -12,7 +12,6 @@ play :-
   retractall(currentPos(_,_)),
   assert(currentPos(1,1)),
   print_maze,
-  writeln('Press arrow keys to move'),
   read_keyatom(Key),
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
@@ -21,10 +20,9 @@ play :-
 
 move(right) :-
   currentPos(R, C),
-  check_win(R,C),
-  maze(R, C1, open),
   C1 is C + 1,
   C1 < 11,
+  maze(R, C1, open),
   retract(currentPos(R,C)),
   assert(currentPos(R,C1)),
   print_maze,
@@ -36,9 +34,9 @@ move(right) :-
 
 move(left) :-
   currentPos(R, C),
-  maze(R, C1, open),
   C1 is C - 1,
   C1 > 0,
+  maze(R, C1, open),
   retract(currentPos(R,C)),
   assert(currentPos(R,C1)),
   print_maze,
@@ -50,9 +48,9 @@ move(left) :-
 
 move(down) :-
   currentPos(R, C),
-  maze(R1, C, open),
   R1 is R + 1,
   R1 < 11,
+  maze(R1, C, open),
   retract(currentPos(R,C)),
   assert(currentPos(R1,C)),
   print_maze,
@@ -64,9 +62,9 @@ move(down) :-
 
 move(up) :-
   currentPos(R, C),
-  maze(R1, C, open),
   R1 is R - 1,
   R1 > 0,
+  maze(R1, C, open),
   retract(currentPos(R,C)),
   assert(currentPos(R1,C)),
   print_maze,
