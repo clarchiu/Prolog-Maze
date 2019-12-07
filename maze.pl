@@ -5,7 +5,7 @@ mazeSize(10,10).
 % - and closed is printed as double Xs "XX"
 
 maze(1, 1, open).
-maze(1, 2, closed).
+maze(1, 2, open).
 maze(1, 3, closed).
 maze(1, 4, closed).
 maze(1, 5, closed).
@@ -105,23 +105,6 @@ maze(10, 8, closed).
 maze(10, 9, open).
 maze(10, 10, open).
 
-:- dynamic currentPos/2.
-:- retractall(currentPos(_,_)).
-
-currentPos(1, 1).
-
-play :-
-  currentPos(_,_),
-  retractall(currentPos(_,_)),
-  assert(currentPos(1,1)).
-
-move(right) :-
-  currentPos(R, C),
-  maze(R, C1, open),
-  C1 is C+1,
-  C1 < 11,
-  retract(currentPos(R,C)),
-  assert(currentPos(R,C1)).
 
 /* Print predicate for maze */
 

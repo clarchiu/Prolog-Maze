@@ -1,4 +1,4 @@
-:- [maze-KB].
+:- [maze].
 
 :- dynamic currentPos/2.
 :- retractall(currentPos(_,_)).
