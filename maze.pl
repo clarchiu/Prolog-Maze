@@ -73,7 +73,7 @@ maze(7, 9, open).
 maze(7, 10, closed).
 maze(8, 1, open).
 maze(8, 2, closed).
-maze(8), 3, open).
+maze(8, 3, open).
 maze(8, 4, closed).
 maze(8, 5, closed).
 maze(8, 6, closed).
