@@ -56,12 +56,12 @@ r :-
 
 % Win condition check
 check_win(R,C) :-
-  goalPos(R,C),
-  once(win).
+  (goalPos(R,C) -> win; true).
 
 win :-
   nl,
-  writeln('You are a winner!').
+  writeln('You are a winner!'),
+  false. % false to end the game
 
 % Walkable check - check if move if valid
 walkable(R,C) :-
