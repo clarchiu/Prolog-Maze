@@ -28,7 +28,7 @@ play(Size, interactive) :-
   initialize(Size, interactive),
   key_press(_).
 play(Size, query) :-
-  initialize(Size, interactive).
+  initialize(Size, query).
 
 % Interactive Mode
 % - handle keyboard events
@@ -56,18 +56,18 @@ r :-
 
 % Win condition check
 check_win(R,C) :-
-  (goalPos(R,C)-> win ; true).
+  goalPos(R,C),
+  once(win).
 
 win :-
   nl,
-  writeln('You are a winner!'),
-  false. %false in order to end the game
+  writeln('You are a winner!').
 
-% Walkable check_win
-walkable(Size,R,C) :-
+% Walkable check - check if move if valid
+walkable(R,C) :-
   currentMazeSize(Size,H,W),
-  R =< W, R > 0,
-  C =< H, C > 0,
+  R =< H, R > 0,
+  C =< W, C > 0,
   maze(Size,R,C,open).
 
 % Helper function to update position
@@ -80,74 +80,60 @@ update(R,C,R1,C1,Mode) :-
 % Move functions
 % - moves the player left, right, up, down
 % - move functions differ depending on game mode
+
+% always check if win condition is true first
+move(_,_) :-
+  currentPos(R,C),
+  check_win(R,C).
+
 move(right, interactive) :-
   currentPos(R,C),
-  check_win(R,C),
-  currentMazeSize(Size,_,W),
   C1 is C + 1,
-  ((maze(Size, R, C1, open), C1 =< W) ->  % prolog if-then-else
+  (walkable(R,C1) ->  % prolog if-then-else
     update(R,C,R,C1,interactive);
     true),
   key_press(_). % wait for next keyboard event
 move(right, query) :-
   currentPos(R, C),
-  check_win(R,C),
-  currentMazeSize(Size,_,W),
   C1 is C + 1,
-  C1 =< W,
-  maze(Size, R, C1, open),
+  walkable(R,C1),
   update(R,C,R,C1,query).
 
 move(left, interactive) :-
   currentPos(R, C),
-  check_win(R,C),
-  currentMazeSize(Size,_,_),
   C1 is C - 1,
-  ((maze(Size, R, C1, open), C1 > 0) -> % prolog if-then-else
+  (walkable(R,C1) -> % prolog if-then-else
     update(R,C,R,C1,interactive);
     true),
   key_press(_). % wait for next keyboard event
 move(left, query) :-
   currentPos(R, C),
-  check_win(R,C),
-  currentMazeSize(Size,_,_),
   C1 is C - 1,
-  C1 > 0,
-  maze(Size, R, C1, open),
+  walkable(R,C1),
   update(R,C,R,C1,query).
 
 move(up, interactive) :-
   currentPos(R, C),
-  check_win(R,C),
-  currentMazeSize(Size,_,_),
   R1 is R - 1,
-  ((maze(Size, R1, C, open), R1 > 0) -> % prolog if-then-else
+  (walkable(R1,C) -> % prolog if-then-else
     update(R,C,R1,C,interactive);
     true),
   key_press(_). % wait for next keyboard event
 move(up, query) :-
   currentPos(R, C),
-  check_win(R,C),
-  currentMazeSize(Size,_,_),
   R1 is R - 1,
-  R1 > 0,
-  maze(Size, R1, C, open),
+  walkable(R1,C),
   update(R,C,R1,C,query).
 
 move(down, interactive) :-
   currentPos(R, C),
-  check_win(R,C),
-  currentMazeSize(Size,H,_),
   R1 is R + 1,
-  ((maze(Size, R1, C, open), R1 =< H) -> % prolog if-then-else
+  (walkable(R1,C) -> % prolog if-then-else
     update(R,C,R1,C,interactive);
     true),
   key_press(_). % wait for next keyboard event
 move(down, query) :-
   currentPos(R, C),
-  check_win(R,C),
-  currentMazeSize(Size,H,_),
   R1 is R + 1,
-  R1 =< H,
-  maze(Size, R1, C, open),
+  walkable(R1,C),
   update(R,C,R1,C,query).
