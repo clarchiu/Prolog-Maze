@@ -4,11 +4,11 @@ read_key([Code|Codes]) :-
 
 read_keyatom(KAtom) :-
     read_key(Codes),
-    ((Codes == [27,91,65]; Codes == [27,91,66] ; Codes == [27,91,67] ; Codes == [27,91,68]) -> 
+    ((Codes == [27,91,65]; Codes == [27,91,66] ; Codes == [27,91,67] ; Codes == [27,91,68]) ->
         codes_keyatom(Codes, KAtom) ;
             (Codes == [113]) -> writeln('Quitting!'),
                                 fail ;
-                (Codes == [114]) -> play ; 
+                (Codes == [114]) -> play ;
                     (writeln('Not a valid key pressed')),
                     read_keyatom(KAtom)).
 
