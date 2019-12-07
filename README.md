@@ -8,15 +8,15 @@ Install `swipl` then query `[game].` Query `play(Mode)` to begin the game. `Mode
 
 ## Sample maze print output
 
-`XXXXXXXXXXXXXXXXXXXXXXXX
-    XXXXXXXXXX        XX
-XX          XX  XX    XX
-XX      XX  XX        XX
-XX  XX  XX  XX  XXXX  XX
-XX  XX  XX  XX  XX    XX
-XX  XXXXXX  XX  XX  XXXX
-XX  XX      XX  XX  XXXX
-XX  XX  XXXXXX  XX    XX
-XXXX            XX    XX
-XX        XXXXXXXX    
-XXXXXXXXXXXXXXXXXXXXXXXX`
+`XXXXXXXXXXXXXXXXXXXXXXXX\n
+    XXXXXXXXXX        XX\n
+XX          XX  XX    XX\n
+XX      XX  XX        XX\n
+XX  XX  XX  XX  XXXX  XX\n
+XX  XX  XX  XX  XX    XX\n
+XX  XXXXXX  XX  XX  XXXX\n
+XX  XX      XX  XX  XXXX\n
+XX  XX  XXXXXX  XX    XX\n
+XXXX            XX    XX\n
+XX        XXXXXXXX      \n
+XXXXXXXXXXXXXXXXXXXXXXXX\n`
