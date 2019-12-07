@@ -22,29 +22,28 @@ print_instr(query) :-
   writeln('Type "a", "s", "w", or "d" to navigate maze'),
   writeln('Type "r" to reset'), nl.
 
-
 % main print predicate
-print_maze(Mode) :-
-    cls,
-    print_instr(Mode),
-    currentPos(X,Y),
-    mazeSize(Height, Width),
-    print_line(Width),
-    % for each line of the maze
-    forall(between(1, Height, I),
-            ((I == 1 -> write('  ') ;
-                        write('XX')),
-                % for each cell of the line
-                forall(between(1, Width, J),
-                            % check if currentPos == cell to be printed,
-                            % if it is print OO as currentPos
-                            ((X == I, J == Y) ->
-                            write('OO') ;
-                            % What is the type of the corresponding cell
-                        (   maze(I, J, Type),
-                            % What is the character of the type
-                            getChar(Type, C),
-                            write(C)))),
-                (I == Height -> writeln('  ') ;
-                writeln('XX')))),
-    print_line(Width).
+print_maze(Size, Mode) :-
+  cls,
+  print_instr(Mode),
+  currentPos(X,Y),
+  mazeSize(Size, Height, Width),
+  print_line(Width),
+  % for each line of the maze
+  forall(between(1, Height, I),
+    ((I == 1 ->
+      write('  ') ;
+      write('XX')),
+      % for each cell of the line
+    forall(between(1, Width, J),
+      % check if currentPos == cell to be printed,
+      % if it is print OO as currentPos
+        ((X == I, J == Y) ->
+          write('OO') ;
+          (maze(Size, I, J, Type),
+            getChar(Type, C),
+            write(C)))),
+    (I == Height ->
+      writeln('  ') ;
+      writeln('XX')))),
+  print_line(Width).

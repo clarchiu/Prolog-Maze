@@ -3,27 +3,40 @@
 :- [print].
 
 :- dynamic currentPos/2.
+:- dynamic currentMazeSize/3.
 :- retractall(currentPos(_,_)).
+:- retractall(currentMazeSize(_,_,_)).
 
 currentPos(1, 1).
-goalPos(10,10).
+currentMazeSize(big,10,10).
+
+goalPos(R,C) :-
+  currentMazeSize(_,R,C).
+
+% Helper function to set currentMazeSize
+choose_maze(Size) :-
+  mazeSize(Size,H,W),
+  retract(currentMazeSize(_,_,_)),
+  assert(currentMazeSize(Size,H,W)).
 
 % To start the game and reset player position
-play(interactive) :-
+play(Size, interactive) :-
   currentPos(_,_),
   retractall(currentPos(_,_)),
   assert(currentPos(1,1)),
-  print_maze(interactive),
+  choose_maze(Size),
+  print_maze(Size,interactive),
   key_press(_).
-play(query) :-
+play(Size, query) :-
   currentPos(_,_),
   retractall(currentPos(_,_)),
   assert(currentPos(1,1)),
-  print_maze(query).
+  choose_maze(Size),
+  print_maze(Size,query).
 
 % Win condition check
 check_win(R,C) :-
-  (goalPos(R,C) -> win ; true).
+  (goalPos(R,C)-> win ; true).
 
 win :-
   nl,
@@ -38,7 +51,9 @@ key_press(Key) :-
       Key == right -> move(right, interactive) ;
         Key == down -> move(down, interactive) ;
           Key == left -> move(left, interactive) ;
-            Key == reset -> play(interactive);
+            Key == reset ->
+              currentMazeSize(Size,_,_),
+              play(Size,interactive);
               Key == quit -> writeln('Quiting!'), fail).
 
 % Query mode
@@ -48,13 +63,16 @@ d :- move(right, query).
 a :- move(left, query).
 w :- move(up, query).
 s :- move(down, query).
-r :- play(query).
+r :-
+  currentMazeSize(Size,_,_),
+  play(Size,query).
 
 % Helper function to update position
 update(R,C,R1,C1,Mode) :-
   retract(currentPos(R,C)),
   assert(currentPos(R1,C1)),
-  print_maze(Mode).
+  currentMazeSize(Size,_,_),
+  print_maze(Size,Mode).
 
 % Move functions
 % - moves the player left, right, up, down
@@ -62,63 +80,71 @@ update(R,C,R1,C1,Mode) :-
 move(right, interactive) :-
   currentPos(R,C),
   check_win(R,C),
+  currentMazeSize(Size,_,W),
   C1 is C + 1,
-  ((maze(R, C1, open), C1 < 11) ->  % prolog if-then-else
+  ((maze(Size, R, C1, open), C1 =< W) ->  % prolog if-then-else
       update(R,C,R,C1,interactive);
       true),
   key_press(_). % wait for next keyboard event
 move(right, query) :-
   currentPos(R, C),
   check_win(R,C),
+  currentMazeSize(Size,_,W),
   C1 is C + 1,
-  C1 < 11,
-  maze(R, C1, open),
+  C1 =< W,
+  maze(Size, R, C1, open),
   update(R,C,R,C1,query).
 
 move(left, interactive) :-
   currentPos(R, C),
   check_win(R,C),
+  currentMazeSize(Size,_,_),
   C1 is C - 1,
-  ((maze(R, C1, open), C1 > 0) -> % prolog if-then-else
+  ((maze(Size, R, C1, open), C1 > 0) -> % prolog if-then-else
     update(R,C,R,C1,interactive);
     true),
   key_press(_). % wait for next keyboard event
 move(left, query) :-
   currentPos(R, C),
   check_win(R,C),
+  currentMazeSize(Size,_,_),
   C1 is C - 1,
   C1 > 0,
-  maze(R, C1, open),
+  maze(Size, R, C1, open),
   update(R,C,R,C1,query).
 
 move(up, interactive) :-
   currentPos(R, C),
   check_win(R,C),
+  currentMazeSize(Size,_,_),
   R1 is R - 1,
-  ((maze(R1, C, open), R1 > 0) -> % prolog if-then-else
+  ((maze(Size, R1, C, open), R1 > 0) -> % prolog if-then-else
     update(R,C,R1,C,interactive);
     true),
   key_press(_). % wait for next keyboard event
 move(up, query) :-
   currentPos(R, C),
   check_win(R,C),
+  currentMazeSize(Size,_,_),
   R1 is R - 1,
   R1 > 0,
-  maze(R1, C, open),
+  maze(Size, R1, C, open),
   update(R,C,R1,C,query).
 
 move(down, interactive) :-
   currentPos(R, C),
   check_win(R,C),
+  currentMazeSize(Size,H,_),
   R1 is R + 1,
-  ((maze(R1, C, open), R1 < 11) -> % prolog if-then-else
+  ((maze(Size, R1, C, open), R1 =< H) -> % prolog if-then-else
     update(R,C,R1,C,interactive);
     true),
   key_press(_). % wait for next keyboard event
 move(down, query) :-
   currentPos(R, C),
   check_win(R,C),
+  currentMazeSize(Size,H,_),
   R1 is R + 1,
-  R1 < 11,
-  maze(R1, C, open),
+  R1 =< H,
+  maze(Size, R1, C, open),
   update(R,C,R1,C,query).
