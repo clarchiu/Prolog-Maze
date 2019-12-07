@@ -112,18 +112,18 @@ maze(10, 10, open).
 getChar(open, '  ').
 getChar(closed, 'XX').
 
-% first and last lines of the maze    
+% first and last lines of the maze
 print_line(Width) :-
     write('XX'),
     forall(between(1,Width, _), write('XX')),
     writeln('XX').
 
-% main print predicate    
+% main print predicate
 print_maze :-
     currentPos(X,Y),
     mazeSize(Height, Width),
     print_line(Width),
-    % for each line of the maze    
+    % for each line of the maze
     forall(between(1, Height, I),
             (write('XX'),
                 % for each cell of the line
