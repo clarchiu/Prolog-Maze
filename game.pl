@@ -79,4 +79,16 @@ move(up) :-
 check_win(R,C) :-
   ((R == 10, C == 10) -> win ; true).
 
-win :- writeln('Victory, you escaped the maze!').
+win :-  writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!'),
+        writeln('You are a winner!').
