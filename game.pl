@@ -12,22 +12,18 @@ play :-
   retractall(currentPos(_,_)),
   assert(currentPos(1,1)),
   print_maze,
-  read_keyatom(Key),
-  (Key == up -> move(up) ;
-    Key == right -> move(right) ;
-      Key == down -> move(down) ;
-        Key == left -> move(left) ; write('Not a valid key')).
+  key_press(_).
 
 
 move(right) :-
   currentPos(R, C),
   check_win(R,C),
   C1 is C + 1,
-  C1 < 11,
-  maze(R, C1, open),
-  retract(currentPos(R,C)),
-  assert(currentPos(R,C1)),
-  print_maze,
+  ((maze(R, C1, open), C1 < 11) ->
+      retract(currentPos(R,C)),
+      assert(currentPos(R,C1)),
+      print_maze ;
+      true),
   read_keyatom(Key),
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
@@ -37,11 +33,11 @@ move(right) :-
 move(left) :-
   currentPos(R, C),
   C1 is C - 1,
-  C1 > 0,
-  maze(R, C1, open),
-  retract(currentPos(R,C)),
-  assert(currentPos(R,C1)),
-  print_maze,
+  ((maze(R, C1, open), C1 > 0) ->
+    retract(currentPos(R,C)),
+    assert(currentPos(R,C1)),
+    print_maze ;
+    true),
   read_keyatom(Key),
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
@@ -51,11 +47,11 @@ move(left) :-
 move(down) :-
   currentPos(R, C),
   R1 is R + 1,
-  R1 < 11,
-  maze(R1, C, open),
-  retract(currentPos(R,C)),
-  assert(currentPos(R1,C)),
-  print_maze,
+  ((maze(R1, C, open), R1 < 11) ->
+    retract(currentPos(R,C)),
+    assert(currentPos(R1,C)),
+    print_maze ;
+    true),
   read_keyatom(Key),
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
@@ -65,11 +61,11 @@ move(down) :-
 move(up) :-
   currentPos(R, C),
   R1 is R - 1,
-  R1 > 0,
-  maze(R1, C, open),
-  retract(currentPos(R,C)),
-  assert(currentPos(R1,C)),
-  print_maze,
+  ((maze(R1, C, open), R1 > 0) ->
+    retract(currentPos(R,C)),
+    assert(currentPos(R1,C)),
+    print_maze ;
+    true),
   read_keyatom(Key),
   (Key == up -> move(up) ;
     Key == right -> move(right) ;
@@ -104,3 +100,10 @@ win :-  writeln('You are a winner!'),
         writeln('You are a winner!'),
         writeln('You are a winner!'),
         writeln('You are a winner!').
+
+key_press(Key) :-
+  read_keyatom(Key),
+    (Key == up -> move(up) ;
+      Key == right -> move(right) ;
+        Key == down -> move(down) ;
+          Key == left -> move(left) ; fail).
