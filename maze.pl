@@ -5,7 +5,7 @@ mazeSize(10,10).
 % - and closed is printed as double Xs "XX"
 
 maze(1, 1, open).
-maze(1, 2, closed).
+maze(1, 2, open).
 maze(1, 3, closed).
 maze(1, 4, closed).
 maze(1, 5, closed).
@@ -104,6 +104,7 @@ maze(10, 7, closed).
 maze(10, 8, closed).
 maze(10, 9, open).
 maze(10, 10, open).
+
 
 /* Print predicate for maze */
 
