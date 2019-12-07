@@ -1,10 +1,6 @@
-%maze size
-mazeSize(10,10)
-
 %10x10 maze
 % - open index is printed as double spaces "  "
 % - and closed is printed as double X's "XX"
-
 maze(1, 1, open).
 maze(1, 2, closed).
 maze(1, 3, closed).
