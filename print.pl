@@ -14,11 +14,19 @@ print_line(Width) :-
     forall(between(1,Width, _), write('XX')),
     writeln('XX').
 
+% printing different instructions depending on Mode
+print_instr(interactive) :-
+  writeln('Press arrow keys to move,'),
+  writeln('q to quit, r to reset.'), nl.
+print_instr(query) :-
+  writeln('Type "a", "s", "w", or "d" to navigate maze'),
+  writeln('Type "r" to reset'), nl.
+
+
 % main print predicate
-print_maze :-
+print_maze(Mode) :-
     cls,
-    writeln('Press arrow keys to move,'),
-    writeln('q to quit, r to reset.'), nl,
+    print_instr(Mode),
     currentPos(X,Y),
     mazeSize(Height, Width),
     print_line(Width),

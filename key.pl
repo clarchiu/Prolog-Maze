@@ -4,17 +4,36 @@ read_key([Code|Codes]) :-
 
 read_keyatom(KAtom) :-
     read_key(Codes),
-    ((Codes == [27,91,65]; Codes == [27,91,66] ; Codes == [27,91,67] ; Codes == [27,91,68]) ->
+    ((Codes == [27,91,65];
+      Codes == [27,91,66];
+      Codes == [27,91,67];
+      Codes == [27,91,68];
+      Codes == [113];
+      Codes == [114]) ->
         codes_keyatom(Codes, KAtom) ;
-            (Codes == [113]) -> writeln('Quitting!'),
-                                fail ;
-                (Codes == [114]) -> play ;
-                    (writeln('Not a valid key pressed')),
-                    read_keyatom(KAtom)).
+        %(writeln('Not a valid key pressed')),
+        read_keyatom(KAtom)).
 
 codes_keyatom([27,91,65],up)    :- !.
 codes_keyatom([27,91,66],down)  :- !.
 codes_keyatom([27,91,67],right) :- !.
 codes_keyatom([27,91,68],left)  :- !.
+codes_keyatom([113],quit)       :- !.
+codes_keyatom([114],reset)      :- !.
 
-% read_keyatom(Key).
+% read_keyatom(KAtom) :-
+%   read_key(Codes),
+%   ((Codes == [27,91,65]; Codes == [27,91,66] ; Codes == [27,91,67] ; Codes == [27,91,68]) ->
+%     codes_keyatom(Codes, KAtom)).
+% read_keyatom(KAtom) :-
+%   read_key(Codes),
+%   Codes == [113],
+%   codes_keyatom(Codes, KAtom).
+% read_keyatom(KAtom) :-
+%   read_key(Codes),
+%   Codes == [114],
+%   codes_keyatom(Codes, KAtom).
+% read_keyatom(KAtom) :-
+%   read_key(Codes),
+%   Codes == [_],
+%   read_keyatom(KAtom).

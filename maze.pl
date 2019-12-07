@@ -1,11 +1,10 @@
-%10x10 maze
+% KB for a 10x10 maze
 mazeSize(10,10).
 
 % - open index is printed as double spaces "  "
 % - and closed is printed as double Xs "XX"
-
 maze(1, 1, open).
-maze(1, 2, closed).
+maze(1, 2, open).
 maze(1, 3, closed).
 maze(1, 4, closed).
 maze(1, 5, closed).
@@ -112,7 +111,7 @@ maze(10, 10, open).
 :- retractall(maze_size(_,_)).
 
 maze_size(10,10).
-    
+
 create_maze(R, C) :-
     maze_size(R, C),
     forall(between(1, R, I),
