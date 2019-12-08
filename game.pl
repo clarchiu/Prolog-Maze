@@ -56,8 +56,7 @@ r :-
 
 % Win condition check
 check_win(R,C) :-
-  (goalPos(R,C) -> win; true),
-  !.
+  (goalPos(R,C) -> win; true).
 
 win :-
   nl,
@@ -69,7 +68,8 @@ walkable(R,C) :-
   currentMazeSize(Size,H,W),
   R =< H, R > 0,
   C =< W, C > 0,
-  maze(Size,R,C,open).
+  maze(Size,R,C,open),
+  !.
 
 % Helper function to update position
 update(R,C,R1,C1,Mode) :-
