@@ -41,7 +41,7 @@ key_press(Key) :-
             Key == reset ->
               currentMazeSize(Size,_,_),
               play(Size,interactive);
-              Key == quit -> writeln('Quiting!'), fail).
+              Key == quit -> writeln('Quiting!'), false).
 
 % Query mode
 % - aliases for move functions
@@ -56,7 +56,8 @@ r :-
 
 % Win condition check
 check_win(R,C) :-
-  (goalPos(R,C) -> win; true).
+  (goalPos(R,C) -> win; true),
+  !.
 
 win :-
   nl,
@@ -81,13 +82,9 @@ update(R,C,R1,C1,Mode) :-
 % - moves the player left, right, up, down
 % - move functions differ depending on game mode
 
-% always check if win condition is true first
-move(_,_) :-
-  currentPos(R,C),
-  check_win(R,C).
-
 move(right, interactive) :-
   currentPos(R,C),
+  check_win(R,C),
   C1 is C + 1,
   (walkable(R,C1) ->  % prolog if-then-else
     update(R,C,R,C1,interactive);
@@ -95,12 +92,14 @@ move(right, interactive) :-
   key_press(_). % wait for next keyboard event
 move(right, query) :-
   currentPos(R, C),
+  check_win(R,C),
   C1 is C + 1,
   walkable(R,C1),
   update(R,C,R,C1,query).
 
 move(left, interactive) :-
   currentPos(R, C),
+  check_win(R,C),
   C1 is C - 1,
   (walkable(R,C1) -> % prolog if-then-else
     update(R,C,R,C1,interactive);
@@ -108,12 +107,14 @@ move(left, interactive) :-
   key_press(_). % wait for next keyboard event
 move(left, query) :-
   currentPos(R, C),
+  check_win(R,C),
   C1 is C - 1,
   walkable(R,C1),
   update(R,C,R,C1,query).
 
 move(up, interactive) :-
   currentPos(R, C),
+  check_win(R,C),
   R1 is R - 1,
   (walkable(R1,C) -> % prolog if-then-else
     update(R,C,R1,C,interactive);
@@ -121,12 +122,14 @@ move(up, interactive) :-
   key_press(_). % wait for next keyboard event
 move(up, query) :-
   currentPos(R, C),
+  check_win(R,C),
   R1 is R - 1,
   walkable(R1,C),
   update(R,C,R1,C,query).
 
 move(down, interactive) :-
   currentPos(R, C),
+  check_win(R,C),
   R1 is R + 1,
   (walkable(R1,C) -> % prolog if-then-else
     update(R,C,R1,C,interactive);
@@ -134,6 +137,7 @@ move(down, interactive) :-
   key_press(_). % wait for next keyboard event
 move(down, query) :-
   currentPos(R, C),
+  check_win(R,C),
   R1 is R + 1,
   walkable(R1,C),
   update(R,C,R1,C,query).
